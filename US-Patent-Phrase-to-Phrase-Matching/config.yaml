@@ -1,0 +1,31 @@
+input_dir: "/home/egortrushin/datasets/us-patent-phrase-to-phrase-matching/"
+output_dir: "ckpt/"
+context_text_lower: True
+epochs: 5
+trn_batch_size: 4
+val_batch_size: 32
+num_workers: 4
+seed: 42
+n_fold: 5
+fold_seed: 42
+trn_fold: [0, 1, 2, 3, 4]
+
+model:
+    model_name: "SimpleModel"
+    base_model_name: "microsoft/deberta-v3-small"
+    model_hparams:
+        fc_dropout: 0.0
+        att_hidden_size: 1024
+        target_size: 1
+    loss_name: "SmoothFocalLoss"
+    optimizer_name: "AdamW"
+    optimizer_hparams:
+        lr: 0.00002
+        weight_decay: 0.01
+    scheduler_name: "linear_schedule_with_warmup"
+
+trainer:
+    max_epochs: 5
+    precision: 16
+    progress_bar_refresh_rate: 1
+    val_check_interval: 0.1
