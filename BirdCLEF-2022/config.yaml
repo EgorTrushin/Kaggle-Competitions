@@ -1,0 +1,69 @@
+data_path: "/home/egortrushin/datasets/birdclef-2022"
+
+folds:
+    n_splits: 5
+    random_state: 42
+train_folds: [0]
+seed: 71
+
+data_module:
+    train_bs: 16
+    valid_bs: 128
+    workers: 8
+    AudioParams:
+        sr: 32000
+        fmin: 20
+        fmax: 16000
+        n_mels: 224
+        hop_length: 512
+
+trainer:
+    gpus: 1
+    max_epochs: 35
+    min_epochs: 35
+    precision: 16
+    deterministic: True
+    stochastic_weight_avg: False
+    progress_bar_refresh_rate: 1
+
+model:
+    p_spec_augmenter: 0.25
+    mixup_epochs: 18
+    mixup_p: 0.5
+    mixup_alpha: 0.4
+    base_model:
+        model_name: "tf_efficientnet_b0_ns"
+        pretrained: True
+        in_chans: 3
+    SpecAugmentation:
+        time_drop_width: 64
+        time_stripes_num: 2
+        freq_drop_width: 8
+        freq_stripes_num: 2
+    optimizer_params:
+        lr: 0.001
+        weight_decay: 0.01
+    scheduler:
+        name: "CosineAnnealingLR"
+        params:
+            CosineAnnealingLR:
+                T_max: 500
+                eta_min: 1.0e-6
+                last_epoch: -1
+            ReduceLROnPlateau:
+                mode: "min"
+                factor: 0.31622776601
+                patience: 4
+                verbose: True
+
+es_callback:
+    monitor: "val_loss"
+    mode: "min"
+    patience: 8
+
+ckpt_callback:
+    monitor: "val_score"
+    dirpath: "ckpts"
+    mode: "max"
+    save_top_k: 1
+    verbose: 1
