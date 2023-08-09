@@ -1,0 +1,57 @@
+data_path: "/home/trushin/Kaggle/GR/data"
+output_dir: "models"
+
+folds_split: True
+folds:
+    n_splits: 5
+    random_state: 42
+train_folds: [0]
+
+seed: 42
+
+train_bs: 8
+valid_bs: 32
+workers: 4
+
+warmup_ratio: 0.1
+
+flips: false
+
+progress_bar_refresh_rate: 500
+
+early_stop:
+    monitor: "val_loss"
+    mode: "min"
+    patience: 999
+    verbose: 1
+
+trainer:
+    max_epochs: 20
+    min_epochs: 20
+    precision: "16-mixed"
+    enable_progress_bar: True
+    gradient_clip_val: 1
+
+model:
+    seg_model: "ResUnet"
+    encoder_name: "tu-timm/dm_nfnet_f0.dm_in1k"
+    loss_smooth: 1.0
+    image_size: 256
+    optimizer_name: "Ranger"
+    optimizer_params:
+        lr: 0.00005
+        weight_decay: 0.0
+    scheduler:
+        name: "cosine_with_hard_restarts_schedule_with_warmup"
+        params:
+            CosineAnnealingLR:
+                T_max: 2
+                eta_min: 1.0e-6
+                last_epoch: -1
+            ReduceLROnPlateau:
+                mode: "min"
+                factor: 0.31622776601
+                patience: 4
+                verbose: True
+            cosine_with_hard_restarts_schedule_with_warmup:
+                num_cycles: 1
