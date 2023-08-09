@@ -1,0 +1,29 @@
+data_path: "/home/trushin/Kaggle/icr-identify-age-related-conditions/"
+models_path: "models"
+
+folds:
+    n_splits: 10
+    random_state: 42
+    shuffle: True
+
+method: "catboost"
+
+model:
+    iterations: 500000
+    early_stopping_rounds: 20000
+    verbose: 10000
+    learning_rate: 0.0006
+    depth: 5
+    l2_leaf_reg: 3.0
+    subsample: 0.8
+    langevin: True
+    diffusion_temperature: 500
+    random_seed: 42
+    auto_class_weights: Balanced
+    random_strength: 10.0
+    colsample_bylevel: 0.75
+    grow_policy: "Depthwise"
+    min_data_in_leaf: 56
+
+denoise: True
+scaler: "RobustScaler"
