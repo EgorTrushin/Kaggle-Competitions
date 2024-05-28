@@ -1,0 +1,26 @@
+data_path: "/data/vault/trushin/home-credit-credit-risk-model-stability"
+
+folds:
+    n_splits: 5
+    shuffle: False
+
+method: "lightgbm"
+
+use_class_weights: False
+
+train:
+    stopping_rounds: 100
+    period: 500
+
+model:
+    boosting_type: "gbdt"
+    objective: "binary"
+    metric: "auc"
+    max_depth: 8
+    max_bin: 255
+    learning_rate: 0.01
+    n_estimators: 10000
+    colsample_bytree: 0.8 
+    colsample_bynode: 0.8
+    verbose: -1
+    random_state: 42

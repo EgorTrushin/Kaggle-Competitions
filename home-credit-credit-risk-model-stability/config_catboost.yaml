@@ -1,0 +1,21 @@
+data_path: "/data/vault/trushin/home-credit-credit-risk-model-stability"
+
+folds:
+    n_splits: 5
+    random_state: 42
+    shuffle: True
+
+method: "catboost"
+
+use_class_weights: False
+
+model:
+    eval_metric: "AUC"
+    iterations: 10000
+    verbose: 250
+    early_stopping_rounds: 100
+    grow_policy: "Depthwise"
+    l2_leaf_reg: 3.0
+    depth: 4
+    learning_rate: 0.03
+    task_type: "GPU"

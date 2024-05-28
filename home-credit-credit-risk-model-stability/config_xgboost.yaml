@@ -1,0 +1,25 @@
+data_path: "/data/vault/trushin/home-credit-credit-risk-model-stability"
+
+folds:
+    n_splits: 5
+    shuffle: False
+
+method: "xgboost"
+
+use_class_weights: False
+
+model:
+    max_depth: 8
+    alpha: 0.1
+    lambda: 10
+    objective: "binary:logistic"
+    enable_categorical: True
+    eval_metric: "auc"
+    learning_rate: 0.005
+    random_state: 42
+    subsample: 0.8
+
+train:
+    num_boost_round: 5000
+    verbose_eval: 250
+    early_stopping_rounds: 100
