@@ -1,0 +1,18 @@
+subfile: "submission.csv"
+sample: 5
+batch_size: 1024
+model_path: '/home/woody/bctc/bctc33/gemma-2-transformers-gemma-2-9b-v2'
+shuffle: -1
+
+params:
+    Tmax: 0.10
+    Tmin: 0.05
+    nsteps: 100
+    nsteps_per_T: 2000
+    log_freq: 100
+    random_state: 256
+    cooling: 'exponential2'
+    k: 1.
+    n: 4
+    alpha: 0.95
+    update_ver: 0
